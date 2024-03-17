@@ -1,9 +1,7 @@
 <template>
   <v-row>
-    <v-btn></v-btn>
     <v-col v-for="image in images" :key="image.id" class="d-flex child-flex" cols="4">
-      <v-img :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-        :src="image.url" class="bg-grey-lighten-2" cover>
+      <v-img :src="image.signedURL" class="bg-grey-lighten-2" cover>
         <template v-slot:placeholder>
           <v-row align="center" class="fill-height ma-0" justify="center">
             <v-progress-circular color="grey-lighten-5" indeterminate></v-progress-circular>
@@ -20,33 +18,42 @@
 </template>
 
 <script>
-import ImageApi from '@/axios/image'
+import ImageAPI from '@/api/image'
 import { alert } from '@/mixins/alert'
-import ImageDetails from '@/components/products/BulkImageUpload.vue'
 
 export default {
   name: 'Images',
-  mixins: [displayError],
+  mixins: [alert],
   data() {
     return {
       user: this.$auth0.user,
       images: [],
       detailModal: false,
       loading: false,
+      limit: 50,
+      offset: 0
     };
   },
-
-  async created() {
-    await this.get_user_images()
+  watch: {
+    async user(newValue) {
+      if (newValue !== undefined) {
+        await this.getUserImages({"limit": 50, "offset": 0, "user_email":newValue.email})
+      }
+    }
+  },
+  mounted() {
+    if (this.user?.email) {
+      this.getUserImages({"limit": 50, "offset": 0, "user_email": this.user.email})
+    }
   },
   methods: {
     openDetails() {
       this.detailModal = true
     },
-    async getUserImages() {
+    async getUserImages(params) {
       this.loading = true
       try {
-        let res = await ImageApi.get_user_images(this.user.email)
+        let res = await ImageAPI.read(params)
         if (res?.data?.length > 0) this.images = res.data
       } catch (err) {
         this.handleError(err)
@@ -64,3 +71,4 @@ export default {
 <style scoped lang="sass">
 
 </style>@/mixins/alert
+@/api/image

@@ -15,9 +15,6 @@
       </v-col>
     </v-row>
   </v-app-bar>
-  <v-col cols="1" offset="10" align="center">
-    <v-btn  @click="doSomethingWithToken"> token </v-btn>
-  </v-col>
 </template>
 
 <script>
@@ -33,11 +30,7 @@ export default {
     },
     logout() {
       this.$auth0.logout({ logoutParams: { returnTo: window.location.origin } });
-    },
-    async doSomethingWithToken() {
-        const token = await this.$auth0.getAccessTokenSilently();
-        console.log(token)
-    },
+    }
   }
 };
 </script>

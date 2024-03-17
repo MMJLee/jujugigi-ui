@@ -8,7 +8,7 @@ import { alert } from '@/mixins/alert'
 
 export default {
     name: 'ImageDetails',
-    mixins: [displayAlert],
+    mixins: [alert],
     props: {
         value: Boolean,
     },
