@@ -1,47 +1,85 @@
 <template>
   <v-app-bar height="40">
-    <v-row align="center">
-      <v-col cols="1" align="center">
-        <RouterLink to="/"> Home </RouterLink>
+    <v-row justify="space-between" align="center">
+      <v-col cols="3">
+        <v-row align="center">
+          <v-col align="end">
+            <RouterLink to="/">
+              <v-btn color="primary">JujuGigi</v-btn>
+            </RouterLink>
+            <v-icon @click="toggleTheme"> {{ themeIcon }} </v-icon>
+          </v-col>
+        </v-row>
       </v-col>
-      <v-col v-if="user" cols="1" offset="9" align="center">
-        <RouterLink to="/me"> {{ user.name }} </RouterLink>
+      <v-col cols="3">
+        <v-row align="center">
+          <v-text-field v-model="search" :label="email" density="compact" variant="outlined"
+            hide-details></v-text-field>
+          <router-link :to="`../profile/${search}`">
+            <v-btn color="primary">Go</v-btn>
+          </router-link>
+        </v-row>
       </v-col>
-      <v-col v-if="user" cols="1" align="center">
-        <v-btn  @click="logout"> Logout </v-btn>
-      </v-col>
-      <v-col v-else cols="1" offset="10" align="center">
-        <v-btn  @click="login"> Login </v-btn>
+      <v-col cols="3">
+        <v-row align="center">
+          <v-col align="start">
+            <RouterLink v-if="user?.email" :to="`../profile/${user.email}`">
+              <v-btn color="primary"> {{ user.name }} </v-btn>
+            </RouterLink>
+            <v-btn @click="logInOut"> {{ logInOutText }} </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-app-bar>
 </template>
 
 <script>
+import { useTheme } from 'vuetify'
+
 export default {
-  data () {
+  data() {
     return {
-      user: this.$auth0.user
+      user: this.$auth0.user,
+      search: "",
+      theme: useTheme()
     };
   },
-  methods: {
-    login() {
-      this.$auth0.loginWithRedirect();
+
+  computed: {
+    logInOutText() {
+      if (this.user) {
+        return "Logout"
+      }
+      return "Login"
     },
-    logout() {
-      this.$auth0.logout({ logoutParams: { returnTo: window.location.origin } });
+    themeIcon() {
+      return this.theme.global.current.dark ? 'mdi-emoticon-happy' : 'mdi-emoticon-cool-outline'
+    },
+    email() { return this.$router.currentRoute.value?.params?.email },
+  },
+  watch: {
+    email(newEmail, oldEmail) {
+      if (newEmail) {
+        this.search = ""
+      }
+    }
+  },
+  methods: {
+    logInOut() {
+      if (this.user) {
+        this.$auth0.logout({ logoutParams: { returnTo: window.location.origin } });
+      } else {
+        this.$auth0.loginWithRedirect();
+      }
+    },
+    toggleTheme() {
+      this.theme.global.name = this.theme.global.current.dark ? 'light' : 'dark'
     }
   }
 };
 </script>
 
 <style scoped lang="sass">
-  
-  .social-link :deep(.v-icon)
-    color: rgba(var(--v-theme-on-background), var(--v-disabled-opacity))
-    text-decoration: none
-    transition: .2s ease-in-out
 
-    &:hover
-      color: rgba(25, 118, 210, 1)
 </style>

@@ -33,7 +33,7 @@ class ImageAPI extends BaseApi {
 
   async update (id, data) {
     return this.auth({
-      url: `/statement/${id}`,
+      url: `/image/${id}`,
       method: 'PUT',
       data
     })
