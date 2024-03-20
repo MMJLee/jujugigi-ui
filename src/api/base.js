@@ -5,7 +5,7 @@ class BaseApi {
   constructor () {
     const api = axios.create({
       baseURL: import.meta.env.VITE_APP_BASE_API,
-      withCredentials: false,
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
