@@ -48,10 +48,10 @@ export default defineConfig({
       '.vue',
     ],
   },
-  server: {
-    https: {
-      key: fs.readFileSync('local.jujugigi.com.key'),
-      cert: fs.readFileSync('local.jujugigi.com.crt')
-    }
-  },
+  // server: {
+  //   https: {
+  //     key: fs.readFileSync('local.jujugigi.com.key'),
+  //     cert: fs.readFileSync('local.jujugigi.com.crt')
+  //   }
+  // },
 })
