@@ -3,8 +3,8 @@
         <v-img :src="image.signedURL" v-bind="props" @click="detailModal = true" align="center" min-width="300"
             max-width="400" max-height="600">
             <v-expand-transition>
-                <div v-if="isHovering" class="d-flex text-h6 v-card--reveal align-end"
-                    :style="{ 'color': rarity_map[image.rarity_name] }">
+                <div v-if="isHovering" class="d-flex text-h6 v-card--reveal align-end glow"
+                    :style="{ 'text-shadow': rarity_map[image.rarity_name] + ' 0 0 10px, ' + rarity_map[image.rarity_name] + ' 0 0 20px' }">
                     [{{ image.rarity_name }}] <br> {{ image.description }}
                 </div>
             </v-expand-transition>
@@ -34,7 +34,7 @@ export default {
     data() {
         return {
             detailModal: false,
-            rarity_map: { "Common": "white", "Uncommon": "green", "Rare": "blue", "Epic": "purple", "Legendary": "orange" }
+            rarity_map: { "Common": "white", "Uncommon": "green", "Rare": "blue", "Epic": "purple", "Unique": "orange" }
         }
     }
 };

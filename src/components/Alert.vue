@@ -1,9 +1,8 @@
 <template>
-
-
-    <v-alert class="mx-auto" max-width="800" v-model="show" closable :type="type" :text="message"> </v-alert>
-
-
+    <div align="center">
+        <v-alert prominent style="z-index: 999;" max-width="50vw" v-model="show" closable :type="type" :text="message">
+        </v-alert>
+    </div>
 </template>
 
 <script>
@@ -17,15 +16,11 @@ export default {
         ...mapWritableState(useAlertStore, ['show']),
     },
     watch: {
-        inputField(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                // Store the original value
-                this.originalValue = oldValue;
-
-                // Set a timeout to revert the change after 2 seconds
+        show(newValue) {
+            if (newValue) {
                 setTimeout(() => {
-                    this.inputField = this.originalValue;
-                }, 2000);
+                    this.show = false;
+                }, 3000);
             }
         }
     }
