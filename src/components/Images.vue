@@ -1,9 +1,10 @@
 <template>
-    <v-row justify="center">
-        <v-col v-for="image in images" align="center">
+    <v-row v-if="loading || images.length > 0" justify="center">
+        <v-col v-for="image in images" align="center" cols="3">
             <Image :image="image" />
         </v-col>
     </v-row>
+    <h1 v-else> This user does not exists or has no images </h1>
 </template>
 
 <script>
@@ -13,7 +14,7 @@ import { useAlertStore } from '@/stores/alert'
 
 export default {
     name: "Images",
-    props: ['username'],
+    props: ['alias'],
     data() {
         return {
             images: [],
@@ -24,14 +25,20 @@ export default {
         };
     },
     created() {
-        this.getUserImages(this.limit, this.offset, this.username)
+        this.getUserImages(this.limit, this.offset, this.alias)
+    },
+    watch: {
+        async alias(newAlias) {
+            this.images = []
+            await this.getUserImages(this.limit, this.offset, newAlias)
+        }
     },
     methods: {
         ...mapActions(useAlertStore, ['handleError']),
-        async getUserImages(limit, offset, user_email) {
+        async getUserImages(limit, offset, user_alias) {
             this.loading = true
             try {
-                let res = await ImageAPI.read({ "user_email": user_email, "limit": limit, "offset": offset })
+                let res = await ImageAPI.read({ "user_alias": user_alias, "limit": limit, "offset": offset })
                 if (res?.data?.length > 0) {
                     this.images.push(...res.data)
                 }
@@ -44,7 +51,7 @@ export default {
         async showMoreImages() {
             this.limit += 50
             this.offset += 50
-            await this.getUserImages(this.limit, this.offset, this.username)
+            await this.getUserImages(this.limit, this.offset, this.alias)
         }
     }
 };

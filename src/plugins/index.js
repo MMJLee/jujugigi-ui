@@ -18,14 +18,14 @@ const Auth0Client = createAuth0({
   authorizationParams: {
     redirect_uri: window.location.origin,
     audience: import.meta.env.VITE_AUTH0_API_AUDIENCE,
-    }
-  })
-export function registerPlugins (app) {
+  }
+})
+export function registerPlugins(app) {
   app
-  .use(createPinia())
-  .use(createVuetify({theme: {defaultTheme: 'dark',},}))
-  .use(createRouter({history: createWebHistory(process.env.BASE_URL),}))
-  .use(Auth0Client)
+    .use(createPinia())
+    .use(createVuetify({ theme: { defaultTheme: 'dark', }, }))
+    .use(createRouter({ history: createWebHistory(process.env.BASE_URL), }))
+    .use(Auth0Client)
 }
 
 export default Auth0Client

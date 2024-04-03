@@ -1,13 +1,13 @@
 import BaseApi from './base'
 
-class UserImageAPI extends BaseApi {
+class UserAliasAPI extends BaseApi {
     constructor() {
         super()
     }
 
     async create(data) {
         return this.auth({
-            url: '/user_image',
+            url: '/user_alias',
             method: 'POST',
             data
         })
@@ -15,16 +15,7 @@ class UserImageAPI extends BaseApi {
 
     async read(params) {
         return this.auth({
-            url: '/user_image',
-            method: 'GET',
-            params
-        })
-    }
-
-    // this.api to bypass auth for leaderboard
-    async read_rankings(params) {
-        return this.api({
-            url: '/user_image/rankings',
+            url: '/user_alias',
             method: 'GET',
             params
         })
@@ -32,7 +23,7 @@ class UserImageAPI extends BaseApi {
 
     async update(id, data) {
         return this.auth({
-            url: `/user_image/${id}`,
+            url: `/user_alias/${id}`,
             method: 'PUT',
             data
         })
@@ -40,10 +31,10 @@ class UserImageAPI extends BaseApi {
 
     async delete(id) {
         return this.auth({
-            url: `/user_image/${id}`,
+            url: `/user_alias/${id}`,
             method: 'DELETE'
         })
     }
 }
 
-export default new UserImageAPI()
+export default new UserAliasAPI()

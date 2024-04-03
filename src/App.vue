@@ -2,8 +2,9 @@
     <v-app>
         <v-main>
             <AppHeader />
-            <Alert />
+            <Alert class="mt-5" />
             <router-view />
+            <AppFooter />
         </v-main>
     </v-app>
 </template>

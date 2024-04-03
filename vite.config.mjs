@@ -49,7 +49,6 @@ export default defineConfig({
     ],
   },
   server: {
-    port: 3000,
     https: {
       key: fs.readFileSync('local.jujugigi.com.key'),
       cert: fs.readFileSync('local.jujugigi.com.crt')

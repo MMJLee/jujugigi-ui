@@ -4,16 +4,10 @@ export const useAlertStore = defineStore('alert', {
     state: () => {
         return {
             show: false,
-            /** @type {'info' | 'success' | 'warning' | 'error' | ''} */
-            type: "",
+            type: null,
             message: "",
             time: 0
         }
-    },
-    getters: {
-        getAlert(state) {
-            return state.alert
-        },
     },
     actions: {
         emitAlert(show, type, message) {
