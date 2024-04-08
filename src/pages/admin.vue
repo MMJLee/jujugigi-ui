@@ -1,7 +1,6 @@
 <template>
     <v-container v-if="isAdmin">
         <Upload />
-        <Gacha />
         <div class="mx-auto" align="center">
             <v-btn @click="toggleShowAll"> {{ showAllText }} </v-btn>
         </div>
