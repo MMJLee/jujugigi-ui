@@ -1,9 +1,9 @@
 <template>
     <v-app-bar height="50">
         <v-row justify="space-between" align="center">
-            <v-col cols="3">
+            <v-col>
                 <v-row align="center">
-                    <v-col align="end">
+                    <v-col align="center">
                         <RouterLink to="/">
                             <v-btn color="primary">JujuGigi</v-btn>
                         </RouterLink>
@@ -11,9 +11,9 @@
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col offset="6" cols="3">
+            <v-col>
                 <v-row align="center">
-                    <v-col align="start">
+                    <v-col align="center">
                         <RouterLink v-if="user?.email" :to="`../profile/${userAlias}`">
                             <v-btn color="primary"> {{ userAlias || user.name }} </v-btn>
                         </RouterLink>

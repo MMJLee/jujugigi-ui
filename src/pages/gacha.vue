@@ -5,13 +5,14 @@
             <v-card-subtitle> All sales are final </v-card-subtitle>
         </v-card-item>
         <v-card-actions>
-            <v-btn @click="playGacha"> Play </v-btn>
+            <v-btn @click="testGacha"> TEST </v-btn>
         </v-card-actions>
         <Image v-if="image" :image="image[0]" />
     </v-card>
 </template>
 
 <script>
+import StripeAPI from "@/api/stripe"
 import ImageAPI from "@/api/image"
 import { mapActions } from 'pinia'
 import { useAlertStore } from '@/stores/alert'
@@ -26,18 +27,9 @@ export default {
     },
     methods: {
         ...mapActions(useAlertStore, ['handleError']),
-        async playGacha() {
-            this.loading = true
-            try {
-                let res = await ImageAPI.gacha()
-                if (res?.data?.length > 0) {
-                    this.image = res.data
-                }
-            } catch (err) {
-                this.handleError(err)
-            } finally {
-                this.loading = false
-            }
+        async testGacha() {
+            let res = await StripeAPI.create()
+            window.location.href = res.data.url
         }
     }
 }

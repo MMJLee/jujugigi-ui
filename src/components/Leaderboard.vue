@@ -10,7 +10,7 @@
     </v-list>
     <v-row justify="space-between" class="pb-5">
         <v-col align="start">
-            <v-btn @click="paginate(false)" :disabled="offset == 0">
+            <v-btn @click="paginate(false)" :disabled="offset <= 0">
                 <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
         </v-col>
@@ -48,9 +48,6 @@ export default {
                 let res = await UserImageAPI.read_rankings({ "limit": limit, "offset": offset })
                 if (res?.data?.length > 0) {
                     this.users = res.data
-                } else {
-                    this.limit -= 10
-                    this.offset -= 10
                 }
             } catch (err) {
                 this.handleError(err)
@@ -63,8 +60,10 @@ export default {
                 this.limit += 10
                 this.offset += 10
             } else {
-                this.limit -= 10
-                this.offset -= 10
+                if (this.offset > 0) {
+                    this.limit -= 10
+                    this.offset -= 10
+                }
             }
             await this.getRankings(this.limit, this.offset)
         }

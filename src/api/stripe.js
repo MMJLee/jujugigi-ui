@@ -1,23 +1,13 @@
 import BaseApi from './base'
 
-class ImageAPI extends BaseApi {
+class StripeAPI extends BaseApi {
   constructor() {
     super()
   }
 
   async create(data) {
     return this.auth({
-      url: '/image',
-      headers: { 'Content-Type': 'multipart/form-data' },
-      method: 'POST',
-      data
-    })
-  }
-
-  async bulk_create(data) {
-    return this.auth({
-      url: '/image/bulk',
-      headers: { 'Content-Type': 'multipart/form-data' },
+      url: '/stripe',
       method: 'POST',
       data
     })
@@ -25,7 +15,7 @@ class ImageAPI extends BaseApi {
 
   async read(params) {
     return this.auth({
-      url: '/image',
+      url: '/stripe',
       method: 'GET',
       params
     })
@@ -33,7 +23,7 @@ class ImageAPI extends BaseApi {
 
   async update(id, data) {
     return this.auth({
-      url: `/image/${id}`,
+      url: `/stripe/${id}`,
       method: 'PUT',
       data
     })
@@ -41,10 +31,12 @@ class ImageAPI extends BaseApi {
 
   async delete(id) {
     return this.auth({
-      url: `/image/${id}`,
+      url: `/stripe/${id}`,
       method: 'DELETE'
     })
   }
+
+
 }
 
-export default new ImageAPI()
+export default new StripeAPI()

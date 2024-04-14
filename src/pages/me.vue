@@ -86,6 +86,7 @@ export default {
                 this.handleError(err)
             } finally {
                 this.loading = false
+                this.confirmModal = false
             }
         },
         openConfirmModal() {
