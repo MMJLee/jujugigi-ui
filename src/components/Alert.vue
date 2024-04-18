@@ -1,8 +1,9 @@
 <template>
-    <div align="center">
-        <v-alert prominent style="z-index: 999;" max-width="50vw" v-model="show" closable :type="type" :text="message">
+    <v-container class="py-0 mt-3">
+        <v-alert class="mx-auto" prominent style="z-index: 999;" max-width="50vw" v-model="show" closable :type="type"
+            :text="message">
         </v-alert>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -16,11 +17,11 @@ export default {
         ...mapWritableState(useAlertStore, ['show']),
     },
     watch: {
-        show(newValue) {
+        time(newValue) {
             if (newValue) {
                 setTimeout(() => {
                     this.show = false;
-                }, 3000);
+                }, newValue);
             }
         }
     }

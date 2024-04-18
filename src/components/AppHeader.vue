@@ -49,7 +49,7 @@ export default {
         }
     },
     computed: {
-        ...mapWritableState(useAliasStore, ['userAlias']),
+        ...mapWritableState(useAliasStore, ['userAlias', 'updatedOn']),
         logInOutText() {
             if (this.user) {
                 return "Logout"
@@ -78,9 +78,10 @@ export default {
                 let res = await UserAliasAPI.read({ "user_email": this.user.email })
                 if (res?.data?.length > 0) {
                     this.userAlias = res.data[0].user_alias
+                    this.updatedOn = res.data[0].updated_on
                 } else {
                     if (this.$router.currentRoute.value.fullPath != "/me") {
-                        this.emitAlert(true, 'warning', 'Please set an alias')
+                        this.emitAlert(true, 'warning', 'Please set an alias', 3)
                         this.$router.push({ path: `/me` })
                     }
                 }

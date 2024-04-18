@@ -23,7 +23,36 @@ const Auth0Client = createAuth0({
 export function registerPlugins(app) {
   app
     .use(createPinia())
-    .use(createVuetify({ theme: { defaultTheme: 'dark', }, }))
+    .use(createVuetify({
+      theme: {
+        defaultTheme: 'light',
+        themes: {
+          light: {
+            dark: false,
+            colors: {
+              primary: '#c28291',
+              secondary: '#FFFF00',
+              background: '#fff0e1',
+              surface: '#f0e1d2',
+              'on-background': '#2d1e0f',
+              'on-surface': '#1e0f00',
+            }
+          },
+          dark: {
+            dark: true,
+            colors: {
+              primary: '#dcafba',
+              secondary: '#FFFF00',
+              background: '#1e0f00',
+              surface: '#2d1e0f',
+              'on-background': '#f0e1d2',
+              'on-surface': '#fff0e1',
+            }
+          }
+        },
+      }
+    }
+    ))
     .use(createRouter({ history: createWebHistory(process.env.BASE_URL), }))
     .use(Auth0Client)
 }

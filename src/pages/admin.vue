@@ -1,12 +1,14 @@
 <template>
-    <v-container v-if="isAdmin">
-        <Upload />
-        <div class="mx-auto" align="center">
-            <v-btn @click="toggleShowAll"> {{ showAllText }} </v-btn>
-        </div>
-        <Images v-if="showAll" />
+    <v-container>
+        <v-card v-if="isAdmin">
+            <Upload />
+            <div class="mx-auto" align="center">
+                <v-btn @click="toggleShowAll"> {{ showAllText }} </v-btn>
+            </div>
+            <Images v-if="showAll" />
+        </v-card>
+        <h1 v-else>Hey, you don't belong here!</h1>
     </v-container>
-    {{ user }}
 </template>
 
 <script>

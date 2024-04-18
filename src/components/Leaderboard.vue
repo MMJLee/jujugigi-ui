@@ -1,6 +1,8 @@
 <template>
     <v-list>
-        <v-list-item align="center" title="Leaderboard"></v-list-item>
+        <v-toolbar color="surface" align="center" title="Leaderboard">
+            <v-btn icon="mdi-magnify"></v-btn>
+        </v-toolbar>
         <v-list-item v-for="(user, i) in users" :to="`../profile/${user.user_alias}`">
             <v-list-item-title v-text="'#' + (offset + i + 1) + ': ' + user.user_alias"></v-list-item-title>
             <v-list-item-subtitle
@@ -8,14 +10,14 @@
             </v-list-item-subtitle>
         </v-list-item>
     </v-list>
-    <v-row justify="space-between" class="pb-5">
-        <v-col align="start">
-            <v-btn @click="paginate(false)" :disabled="offset <= 0">
+    <v-row>
+        <v-col class="pr-0">
+            <v-btn block @click="paginate(false)" :disabled="offset <= 0">
                 <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
         </v-col>
-        <v-col align="end">
-            <v-btn @click="paginate(true)">
+        <v-col class="pl-0">
+            <v-btn block @click="paginate(true)">
                 <v-icon>mdi-arrow-right</v-icon>
             </v-btn>
         </v-col>
@@ -48,6 +50,9 @@ export default {
                 let res = await UserImageAPI.read_rankings({ "limit": limit, "offset": offset })
                 if (res?.data?.length > 0) {
                     this.users = res.data
+                } else {
+                    this.limit -= 10
+                    this.offset -= 10
                 }
             } catch (err) {
                 this.handleError(err)
@@ -60,10 +65,11 @@ export default {
                 this.limit += 10
                 this.offset += 10
             } else {
-                if (this.offset > 0) {
-                    this.limit -= 10
-                    this.offset -= 10
+                if (this.offset <= 0) {
+                    return
                 }
+                this.limit -= 10
+                this.offset -= 10
             }
             await this.getRankings(this.limit, this.offset)
         }

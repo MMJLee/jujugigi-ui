@@ -2,8 +2,8 @@
     <v-app>
         <v-main>
             <AppHeader />
-            <Alert class="mt-5" />
-            <router-view />
+            <Alert />
+            <router-view class="full-height" />
             <AppFooter />
         </v-main>
     </v-app>
@@ -11,3 +11,8 @@
 
 <script setup>
 </script>
+<style scoped>
+.full-height {
+    min-height: 100vh;
+}
+</style>
