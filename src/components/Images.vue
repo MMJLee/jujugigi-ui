@@ -1,6 +1,6 @@
 <template>
-    <v-row v-if="loading || images.length > 0" justify="center">
-        <v-col v-for="image in images" align="center" cols="3">
+    <v-row v-if="loading || images.length > 0" class="mx-5" justify="center">
+        <v-col v-for="image in images" align="center" cols="6" md="4" lg="3">
             <Image :image="image" />
         </v-col>
     </v-row>
@@ -25,6 +25,7 @@ export default {
         };
     },
     created() {
+        this.loading = true
         this.getUserImages(this.limit, this.offset, this.alias)
     },
     watch: {
@@ -38,7 +39,7 @@ export default {
         async getUserImages(limit, offset, user_alias) {
             this.loading = true
             try {
-                let res = await ImageAPI.read({ "user_alias": user_alias, "limit": limit, "offset": offset })
+                let res = await ImageAPI.read({ "user_alias": user_alias, "opened": true, "limit": limit, "offset": offset })
                 if (res?.data?.length > 0) {
                     this.images.push(...res.data)
                 }

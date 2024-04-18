@@ -1,9 +1,9 @@
 <template>
     <v-app-bar height="50">
         <v-row justify="space-between" align="center">
-            <v-col cols="3">
+            <v-col>
                 <v-row align="center">
-                    <v-col align="end">
+                    <v-col align="center">
                         <RouterLink to="/">
                             <v-btn color="primary">JujuGigi</v-btn>
                         </RouterLink>
@@ -11,9 +11,9 @@
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col offset="6" cols="3">
+            <v-col>
                 <v-row align="center">
-                    <v-col align="start">
+                    <v-col align="center">
                         <RouterLink v-if="user?.email" :to="`../profile/${userAlias}`">
                             <v-btn color="primary"> {{ userAlias || user.name }} </v-btn>
                         </RouterLink>
@@ -49,7 +49,7 @@ export default {
         }
     },
     computed: {
-        ...mapWritableState(useAliasStore, ['userAlias']),
+        ...mapWritableState(useAliasStore, ['userAlias', 'updatedOn']),
         logInOutText() {
             if (this.user) {
                 return "Logout"
@@ -78,9 +78,10 @@ export default {
                 let res = await UserAliasAPI.read({ "user_email": this.user.email })
                 if (res?.data?.length > 0) {
                     this.userAlias = res.data[0].user_alias
+                    this.updatedOn = res.data[0].updated_on
                 } else {
                     if (this.$router.currentRoute.value.fullPath != "/me") {
-                        this.emitAlert(true, 'warning', 'Please set an alias')
+                        this.emitAlert(true, 'warning', 'set an alias', 3)
                         this.$router.push({ path: `/me` })
                     }
                 }

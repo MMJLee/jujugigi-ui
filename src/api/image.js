@@ -1,29 +1,29 @@
 import BaseApi from './base'
 
 class ImageAPI extends BaseApi {
-  constructor () {
+  constructor() {
     super()
   }
 
-  async create (data) {
+  async create(data) {
     return this.auth({
       url: '/image',
-      headers: {'Content-Type': 'multipart/form-data'},
+      headers: { 'Content-Type': 'multipart/form-data' },
       method: 'POST',
       data
     })
   }
 
-  async bulk_create (data) {
+  async bulk_create(data) {
     return this.auth({
       url: '/image/bulk',
-      headers: {'Content-Type': 'multipart/form-data'},
+      headers: { 'Content-Type': 'multipart/form-data' },
       method: 'POST',
       data
     })
   }
 
-  async read (params) {
+  async read(params) {
     return this.auth({
       url: '/image',
       method: 'GET',
@@ -31,7 +31,7 @@ class ImageAPI extends BaseApi {
     })
   }
 
-  async update (id, data) {
+  async update(id, data) {
     return this.auth({
       url: `/image/${id}`,
       method: 'PUT',
@@ -39,17 +39,17 @@ class ImageAPI extends BaseApi {
     })
   }
 
-  async delete (id) {
+  async delete(id) {
     return this.auth({
       url: `/image/${id}`,
       method: 'DELETE'
     })
   }
 
-  async gacha () {
+  async open() {
     return this.auth({
-      url: '/image/gacha',
-      method: 'GET'
+      url: '/image/open',
+      method: 'PUT'
     })
   }
 }

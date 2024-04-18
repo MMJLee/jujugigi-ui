@@ -21,9 +21,9 @@ class UserAliasAPI extends BaseApi {
         })
     }
 
-    async update(id, data) {
+    async update(data) {
         return this.auth({
-            url: `/user_alias/${id}`,
+            url: `/user_alias`,
             method: 'PUT',
             data
         })
