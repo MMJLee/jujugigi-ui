@@ -35,7 +35,7 @@ export default {
             preview_urls: [],
             file_name_rules: [
                 value => { return value ? true : 'Need a value' },
-                value => { return value.match(/^[GgJj][1-5]_[a-z0-9_]+$/) ? true : 'Invalid file name schema' },
+                value => { return value.match(/^[1-5]_[a-z0-9_]+$/) ? true : 'Invalid file name schema' },
             ],
         }
     },
@@ -76,7 +76,7 @@ export default {
         },
         async uploadImages() {
             this.loading = true
-            this.emitAlert(true, 'success', 'Uploading...')
+            this.emitAlert(true, 'success', 'uploading...', 3)
             const formData = new FormData()
             const file_names = []
             for (let i = 0; i < this.files.length; i++) {
@@ -88,7 +88,7 @@ export default {
             }
             try {
                 await ImageAPI.bulk_create(formData)
-                this.emitAlert(true, 'success', 'Upload complete')
+                this.emitAlert(true, 'success', 'upload complete', 3)
             } catch (err) {
                 this.handleError(err)
             } finally {

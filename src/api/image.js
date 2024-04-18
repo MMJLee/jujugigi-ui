@@ -45,6 +45,13 @@ class ImageAPI extends BaseApi {
       method: 'DELETE'
     })
   }
+
+  async open() {
+    return this.auth({
+      url: '/image/open',
+      method: 'PUT'
+    })
+  }
 }
 
 export default new ImageAPI()

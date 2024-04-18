@@ -81,7 +81,7 @@ export default {
                     this.updatedOn = res.data[0].updated_on
                 } else {
                     if (this.$router.currentRoute.value.fullPath != "/me") {
-                        this.emitAlert(true, 'warning', 'Please set an alias', 3)
+                        this.emitAlert(true, 'warning', 'set an alias', 3)
                         this.$router.push({ path: `/me` })
                     }
                 }

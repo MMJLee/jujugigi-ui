@@ -4,6 +4,7 @@ export const useAliasStore = defineStore('alias', {
     state: () => {
         return {
             userAlias: "",
+            updatedOn: ""
         }
     }
 })
