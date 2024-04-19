@@ -20,8 +20,8 @@ export default {
         time(newValue) {
             if (newValue) {
                 setTimeout(() => {
-                    this.show = false;
-                }, newValue);
+                    this.show = false
+                }, newValue)
             }
         }
     }

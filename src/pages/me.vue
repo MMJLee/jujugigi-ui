@@ -80,7 +80,7 @@ export default {
             if (this.updatedOn) {
                 let updatedDate = new Date(this.updatedOn)
                 let ninetyDaysLater = new Date()
-                ninetyDaysLater.setDate(ninetyDaysLater.getDate() + (90));
+                ninetyDaysLater.setDate(ninetyDaysLater.getDate() + (90))
                 if (ninetyDaysLater > updatedDate) {
                     return false
                 }

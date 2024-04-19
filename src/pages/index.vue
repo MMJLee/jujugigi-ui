@@ -29,7 +29,7 @@ export default {
         ...mapActions(useAlertStore, ['handleError']),
         async gacha() {
             try {
-                let res = await StripeAPI.create()
+                let res = await StripeAPI.read()
                 if (res?.data?.url) {
                     window.location.href = res.data.url
                 }

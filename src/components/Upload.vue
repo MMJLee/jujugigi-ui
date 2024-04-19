@@ -35,7 +35,7 @@ export default {
             preview_urls: [],
             file_name_rules: [
                 value => { return value ? true : 'Need a value' },
-                value => { return value.match(/^[1-5]_[a-z0-9_]+$/) ? true : 'Invalid file name schema' },
+                value => { return value.match(/^[1-5]_[a-z0-9_']+$/) ? true : 'Invalid file name schema' },
             ],
         }
     },
@@ -76,7 +76,7 @@ export default {
         },
         async uploadImages() {
             this.loading = true
-            this.emitAlert(true, 'success', 'uploading...', 3)
+            this.emitAlert(true, 'success', 'uploading...', 300)
             const formData = new FormData()
             const file_names = []
             for (let i = 0; i < this.files.length; i++) {

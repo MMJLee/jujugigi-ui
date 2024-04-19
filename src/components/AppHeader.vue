@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar height="50">
+    <v-app-bar density="compact">
         <v-row justify="space-between" align="center">
             <v-col>
                 <v-row align="center">
@@ -39,7 +39,7 @@ export default {
             loading: false,
             user: this.$auth0.user,
             theme: useTheme()
-        };
+        }
     },
     watch: {
         async user(newValue) {
@@ -64,9 +64,9 @@ export default {
         ...mapActions(useAlertStore, ['handleError', 'emitAlert']),
         logInOut() {
             if (this.user) {
-                this.$auth0.logout({ logoutParams: { returnTo: window.location.origin } });
+                this.$auth0.logout({ logoutParams: { returnTo: window.location.origin } })
             } else {
-                this.$auth0.loginWithRedirect();
+                this.$auth0.loginWithRedirect()
             }
         },
         toggleTheme() {
@@ -92,5 +92,5 @@ export default {
             }
         }
     }
-};
+}
 </script>

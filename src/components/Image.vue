@@ -55,7 +55,7 @@ export default {
             return glowStr
         }
     }
-};
+}
 </script>
 <style>
 .v-card--reveal {

@@ -14,5 +14,5 @@ export default {
     computed: {
         alias() { return this.$router.currentRoute.value.params.alias }
     }
-};
+}
 </script>

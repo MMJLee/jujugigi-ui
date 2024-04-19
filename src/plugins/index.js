@@ -8,7 +8,7 @@
 import { createPinia } from 'pinia'
 import { createVuetify } from 'vuetify'
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import { createAuth0 } from '@auth0/auth0-vue';
+import { createAuth0 } from '@auth0/auth0-vue'
 
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'

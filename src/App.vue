@@ -1,9 +1,9 @@
 <template>
     <v-app>
-        <v-main>
+        <v-main class="full-height">
             <AppHeader />
             <Alert />
-            <router-view class="full-height" />
+            <router-view style="flex: auto;" />
             <AppFooter />
         </v-main>
     </v-app>
@@ -13,6 +13,8 @@
 </script>
 <style scoped>
 .full-height {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
 }
 </style>

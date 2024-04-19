@@ -22,7 +22,7 @@ export default {
             loading: false,
             limit: 50,
             offset: 0
-        };
+        }
     },
     created() {
         this.loading = true
@@ -55,5 +55,5 @@ export default {
             await this.getUserImages(this.limit, this.offset, this.alias)
         }
     }
-};
+}
 </script>
