@@ -17,7 +17,7 @@
             </v-form>
         </v-card>
         <v-dialog v-model="confirmModal" persistent>
-            <v-card class="mx-auto pb-4" width="600">
+            <v-card class="mx-auto pb-4">
                 <v-card-title>
                     <v-row class="my-1">
                         <v-col>
