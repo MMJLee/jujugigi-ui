@@ -1,8 +1,10 @@
 <template>
     <v-container class="py-0 mt-3">
-        <v-alert class="mx-auto" prominent style="z-index: 999;" max-width="50vw" v-model="show" closable :type="type"
-            :text="message">
-        </v-alert>
+        <v-card>
+            <v-alert class="mx-auto" prominent style="z-index: 999;" v-model="show" closable :type="type"
+                :text="message">
+            </v-alert>
+        </v-card>
     </v-container>
 </template>
 

@@ -125,6 +125,7 @@ export default {
                             this.userAlias = this.alias
                             this.updatedOn = new Date()
                             this.emitAlert(true, 'success', 'alias successfully set', 3)
+                            this.$router.push({ path: `/` })
                         } else {
                             this.emitAlert(true, 'warning', 'error creating alias', 3)
                         }
