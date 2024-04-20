@@ -31,6 +31,7 @@ import StripeAPI from "@/api/stripe"
 import ImageAPI from "@/api/image"
 import { mapActions } from 'pinia'
 import { useAlertStore } from '@/stores/alert'
+import imgUrl from '@/assets/feels_bad_man.png'
 
 export default {
     name: 'Gacha',
@@ -48,7 +49,7 @@ export default {
         getImgUrl() {
             if (this.image?.signedURL) {
                 return this.image?.signedURL
-            } return "../src/assets/feels_bad_man.png"
+            } return imgUrl
         },
         ...mapActions(useAlertStore, ['handleError']),
         reset() {
