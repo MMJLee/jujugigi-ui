@@ -1,8 +1,8 @@
 <template>
     <v-app-bar density="compact">
-        <v-row justify="space-between" align="center">
-            <v-col>
-                <v-row align="center">
+        <v-row>
+            <v-col cols="5" sm="6">
+                <v-row>
                     <v-col align="center">
                         <RouterLink to="/">
                             <v-btn color="primary">JujuGigi</v-btn>
@@ -11,11 +11,11 @@
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col>
+            <v-col cols="7" sm="6">
                 <v-row align="center">
                     <v-col align="center">
                         <RouterLink v-if="user?.email" :to="`../profile/${userAlias}`">
-                            <v-btn color="primary"> {{ userAlias || user.name }} </v-btn>
+                            <v-btn class="pl-0" color="primary"> {{ userAlias || user.name }} </v-btn>
                         </RouterLink>
                         <v-btn @click="logInOut"> {{ logInOutText }} </v-btn>
                     </v-col>
@@ -94,3 +94,9 @@ export default {
     }
 }
 </script>
+<style scoped>
+header {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+</style>

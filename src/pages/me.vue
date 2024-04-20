@@ -8,7 +8,7 @@
                 <v-text-field v-model="alias" label="Alias" :rules="rules"></v-text-field>
                 <v-row>
                     <v-col class="px-0">
-                        <v-btn block @click="checkAlias">Verify</v-btn>
+                        <v-btn block @click="checkAlias" :disabled="!validForm">Verify</v-btn>
                     </v-col>
                     <v-col class="px-0">
                         <v-btn block @click="openConfirmModal" :disabled="!validAlias">Submit</v-btn>
@@ -61,6 +61,7 @@ export default {
             rules: [
                 v => !!v || 'alias is required',
                 v => v.length >= 4 || 'alias must be at least 4 characters',
+                v => v.length <= 9 || 'alias must be at most 9 characters',
                 v => /^[\w]+$/.test(v) || 'alias cannot contain special characters',
             ],
             today: new Date()
