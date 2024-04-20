@@ -2,9 +2,8 @@
     <v-hover v-slot="{ isHovering, props }">
         <v-img :src="image?.signedURL" v-bind="props" @click="detailModal = true" align="center">
             <v-expand-transition>
-                <div v-if="isHovering" class="d-flex text-h5 v-card--reveal align-end glow" :style="{
-                    'text-shadow': glow(image?.rarity)
-                }">
+                <div v-if="isHovering" class="d-flex text-h5 v-card--reveal align-end glow"
+                    :style="{ 'text-shadow': glow(image?.rarity) }">
                     [{{ rarity_name[image?.rarity] }}] <br> {{ image?.description }}
                 </div>
             </v-expand-transition>

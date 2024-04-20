@@ -3,7 +3,7 @@
         <v-row align="center">
             <v-col>
                 <h1> Unleash the purrfect cat picture!
-                    <v-btn @click="gacha"> Play </v-btn>
+                    <v-btn @click="$router.push({ path: `/success` })"> Play </v-btn>
                 </h1>
             </v-col>
         </v-row>
@@ -17,26 +17,3 @@
         </v-row>
     </v-container>
 </template>
-
-<script>
-import StripeAPI from "@/api/stripe"
-import { mapActions } from 'pinia'
-import { useAlertStore } from '@/stores/alert'
-
-export default {
-    name: 'Gacha',
-    methods: {
-        ...mapActions(useAlertStore, ['handleError']),
-        async gacha() {
-            try {
-                let res = await StripeAPI.read()
-                if (res?.data?.url) {
-                    window.location.href = res.data.url
-                }
-            } catch (err) {
-                this.handleError(err)
-            }
-        }
-    }
-}
-</script>
