@@ -13,14 +13,14 @@
         </div>
     </div>
     <div v-else>
-        <v-card v-show="loading == false" class="justify-center">
+        <v-card v-show="!loading" class="justify-center">
             <v-img id="vimage" :src="getImgUrl()" max-height="70vh" />
             <h1 v-if="image"> you got a <span :style="{ 'text-shadow': glow(image?.rarity) }">
                     {{ image?.description }} ({{ rarity_name[image?.rarity] }}) </span>
                 <v-btn class="ml-1" @click="reset"> Open again </v-btn>
             </h1>
             <h1 v-else> you don't have any images to open
-                <v-btn class="ml-1" @click="gacha"> Buy more </v-btn>
+                <v-btn class="ml-1" @click="gacha"> Play again </v-btn>
             </h1>
         </v-card>
     </div>
@@ -58,16 +58,17 @@ export default {
             document.getElementById("vimage").classList.remove("reveal")
         },
         async getLatestUnopendUserImage() {
-            this.opened = true
             this.loading = true
             try {
                 let res = await ImageAPI.open()
+                this.opened = true
                 if (res?.data?.length > 0) {
                     this.image = res.data[0]
                 }
             } catch (err) {
                 this.handleError(err)
             } finally {
+                await this.sleep(1)
                 this.loading = false
                 document.getElementById("vimage").classList.add("reveal")
             }
@@ -88,9 +89,12 @@ export default {
             }
             return glowStr
         },
+        async sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        },
         async gacha() {
             try {
-                let res = await StripeAPI.read()
+                let res = await StripeAPI.read({ "quantity": 2 })
                 if (res?.data?.url) {
                     window.location.href = res.data.url
                 }
@@ -243,7 +247,8 @@ h1 {
 }
 
 /* hover effects */
-#present:hover #lid {
+#present:hover #lid,
+#present:active #lid {
     top: calc((-0.3)*var(--height));
     transform: rotateZ(10deg);
     left: 10px;
