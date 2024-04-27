@@ -21,6 +21,7 @@
             </h1>
             <h1 v-else> you don't have any images to open
                 <v-btn class="ml-1" @click="gacha"> Play again </v-btn>
+                <v-btn class="ml-1" @click="dd"> daily free </v-btn>
             </h1>
         </v-card>
     </div>
@@ -98,6 +99,14 @@ export default {
                 if (res?.data?.url) {
                     window.location.href = res.data.url
                 }
+            } catch (err) {
+                this.handleError(err)
+            }
+        },
+        async dd() {
+            try {
+                let res = await ImageAPI.daily_dollar()
+                this.reset()
             } catch (err) {
                 this.handleError(err)
             }

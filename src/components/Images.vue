@@ -50,7 +50,6 @@ export default {
             }
         },
         async showMoreImages() {
-            this.limit += 50
             this.offset += 50
             await this.getUserImages(this.limit, this.offset, this.alias)
         }

@@ -51,7 +51,6 @@ export default {
                 if (res?.data?.length > 0) {
                     this.users = res.data
                 } else {
-                    this.limit -= 10
                     this.offset -= 10
                 }
             } catch (err) {
@@ -62,13 +61,11 @@ export default {
         },
         async paginate(next) {
             if (next) {
-                this.limit += 10
                 this.offset += 10
             } else {
                 if (this.offset <= 0) {
                     return
                 }
-                this.limit -= 10
                 this.offset -= 10
             }
             await this.getRankings(this.limit, this.offset)

@@ -52,6 +52,13 @@ class ImageAPI extends BaseApi {
       method: 'PUT'
     })
   }
+
+  async daily_dollar() {
+    return this.auth({
+      url: '/image/dd',
+      method: 'POST'
+    })
+  }
 }
 
 export default new ImageAPI()
