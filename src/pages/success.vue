@@ -1,6 +1,6 @@
 <template>
     <div id="box-container" v-if="!opened">
-        <div id="present" @click="getLatestUnopendUserImage">
+        <div id="present" @click="openBox">
             <div id="lid">
                 <span></span>
                 <span></span>
@@ -20,8 +20,8 @@
                 <v-btn class="ml-1" @click="reset"> Open again </v-btn>
             </h1>
             <h1 v-else> you don't have any images to open
-                <v-btn class="ml-1" @click="gacha"> Play again </v-btn>
-                <v-btn class="ml-1" @click="dd"> daily free </v-btn>
+                <v-btn v-if="timeLeft < 0" class="ml-1" @click="dd"> Play for Free </v-btn>
+                <v-btn v-else class="ml-1" @click="gacha"> {{ remainingTime }}</v-btn>
             </h1>
         </v-card>
     </div>
@@ -30,9 +30,10 @@
 <script>
 import StripeAPI from "@/api/stripe"
 import ImageAPI from "@/api/image"
-import { mapActions } from 'pinia'
+import { mapActions, mapWritableState } from 'pinia'
 import { useAlertStore } from '@/stores/alert'
-import imgUrl from '@/assets/feels_bad_man.png'
+import { useAliasStore } from '@/stores/alias'
+import pepeUrl from '@/assets/feels_bad_man.png'
 
 export default {
     name: 'Gacha',
@@ -44,21 +45,42 @@ export default {
             loading: false,
             rarity_name: { "1": "common", "2": "uncommon", "3": "rare", "4": "epic", "5": "unique" },
             rarity_color: { "1": "white", "2": "green", "3": "blue", "4": "purple", "5": "orange" },
+            now: null,
+            interval: null
         }
     },
+    mounted() {
+        this.updateTime()
+        this.interval = setInterval(this.updateTime, 1000)
+    },
+    beforeDestroy() {
+        clearInterval(this.interval)
+    },
+    computed: {
+        ...mapWritableState(useAliasStore, ['dailyDollar']),
+        timeLeft() {
+            let ddDate = new Date(this.dailyDollar)
+            let dayAgo = new Date()
+            dayAgo.setDate(this.now?.getDate() - 1)
+            return ddDate.getTime() - dayAgo.getTime()
+        },
+        remainingTime() {
+            if (this.dailyDollar) {
+                if (this.timeLeft > 0) {
+                    let hours = Math.floor(this.timeLeft / (1000 * 60 * 60))
+                    let minutes = Math.floor((this.timeLeft % (1000 * 60 * 60)) / (1000 * 60))
+                    let seconds = Math.floor((this.timeLeft % (1000 * 60)) / 1000)
+                    return 'Buy (Free in ' + hours.toString().padStart(2, '0') + ":" +
+                        minutes.toString().padStart(2, '0') + ":" +
+                        seconds.toString().padStart(2, '0') + ")"
+                }
+            }
+            return "Buy"
+        },
+    },
     methods: {
-        getImgUrl() {
-            if (this.image?.signedURL) {
-                return this.image?.signedURL
-            } return imgUrl
-        },
         ...mapActions(useAlertStore, ['handleError']),
-        reset() {
-            this.image = null
-            this.opened = false
-            document.getElementById("vimage").classList.remove("reveal")
-        },
-        async getLatestUnopendUserImage() {
+        async openBox() {
             this.loading = true
             try {
                 let res = await ImageAPI.open()
@@ -73,6 +95,35 @@ export default {
                 this.loading = false
                 document.getElementById("vimage").classList.add("reveal")
             }
+        },
+        async gacha() {
+            try {
+                let res = await StripeAPI.read({ "quantity": 2 })
+                if (res?.data?.url) {
+                    window.location.href = res.data.url
+                }
+            } catch (err) {
+                this.handleError(err)
+            }
+        },
+        async dd() {
+            try {
+                let res = await ImageAPI.daily_dollar()
+                if (res.data) {
+                    this.dailyDollar = new Date()
+                    this.reset()
+                }
+            } catch (err) {
+                this.handleError(err)
+            }
+        },
+        updateTime() {
+            this.now = new Date()
+        },
+        getImgUrl() {
+            if (this.image?.signedURL) {
+                return this.image?.signedURL
+            } return pepeUrl
         },
         glow(rarity) {
             let glowStr = ''
@@ -90,26 +141,13 @@ export default {
             }
             return glowStr
         },
+        reset() {
+            this.image = null
+            this.opened = false
+            document.getElementById("vimage").classList.remove("reveal")
+        },
         async sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        },
-        async gacha() {
-            try {
-                let res = await StripeAPI.read({ "quantity": 2 })
-                if (res?.data?.url) {
-                    window.location.href = res.data.url
-                }
-            } catch (err) {
-                this.handleError(err)
-            }
-        },
-        async dd() {
-            try {
-                let res = await ImageAPI.daily_dollar()
-                this.reset()
-            } catch (err) {
-                this.handleError(err)
-            }
+            return new Promise(resolve => setTimeout(resolve, ms))
         }
     }
 }

@@ -73,18 +73,19 @@ export default {
         }
     },
     computed: {
-        ...mapWritableState(useAliasStore, ['userAlias'], ['updatedOn']),
+        ...mapWritableState(useAliasStore, ['userAlias', 'updatedOn', 'dailyDollar']),
     },
     methods: {
         ...mapActions(useAlertStore, ['handleError', 'emitAlert']),
         timeLimit() {
             if (this.updatedOn) {
+                let now = new Date()
                 let updatedDate = new Date(this.updatedOn)
-                let ninetyDaysLater = new Date()
-                ninetyDaysLater.setDate(ninetyDaysLater.getDate() + (90))
-                if (ninetyDaysLater > updatedDate) {
-                    return false
+                updatedDate.setDate(updatedDate.getDate() + 90)
+                if (now > updatedDate) {
+                    return true
                 }
+                return false
             }
             return true
         },
@@ -116,6 +117,7 @@ export default {
                             this.userAlias = this.alias
                             this.updatedOn = new Date()
                             this.emitAlert(true, 'success', 'alias successfully set', 3)
+                            this.$router.push({ path: `/` })
                         } else {
                             this.emitAlert(true, 'warning', 'error updating alias', 3)
                         }
@@ -125,6 +127,7 @@ export default {
                         if (res?.data?.added > 0) {
                             this.userAlias = this.alias
                             this.updatedOn = new Date()
+                            this.dailyDollar = new Date().setDate(this.updatedOn.getDate() - 2)
                             this.emitAlert(true, 'success', 'alias successfully set', 3)
                             this.$router.push({ path: `/` })
                         } else {

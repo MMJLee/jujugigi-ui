@@ -49,7 +49,7 @@ export default {
         }
     },
     computed: {
-        ...mapWritableState(useAliasStore, ['userAlias', 'updatedOn']),
+        ...mapWritableState(useAliasStore, ['userAlias', 'updatedOn', 'dailyDollar']),
         logInOutText() {
             if (this.user) {
                 return "Logout"
@@ -79,6 +79,7 @@ export default {
                 if (res?.data?.length > 0) {
                     this.userAlias = res.data[0].user_alias
                     this.updatedOn = res.data[0].updated_on
+                    this.dailyDollar = res.data[0].daily_dollar
                 } else {
                     if (this.$router.currentRoute.value.fullPath != "/me") {
                         this.emitAlert(true, 'warning', 'set an alias', 3)
